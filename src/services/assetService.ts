@@ -175,7 +175,7 @@ const isDirectRemoteImageUrl = (url: string) => {
 export const toImageProxyUrl = (url: string | null | undefined): string | null => {
   if (!url) return null;
 
-  if (url.startsWith(`${env.apiBaseUrl}/api/assets/image-proxy`)) {
+  if (url.startsWith(`${env.apiBaseUrl}/assets/image-proxy`)) {
     return url;
   }
 
@@ -183,7 +183,7 @@ export const toImageProxyUrl = (url: string | null | undefined): string | null =
     return null;
   }
 
-  return `${env.apiBaseUrl}/api/assets/image-proxy?url=${encodeURIComponent(url)}`;
+  return `${env.apiBaseUrl}/assets/image-proxy?url=${encodeURIComponent(url)}`;
 };
 
 const findExistingFile = (candidates: string[]): string | null => {
