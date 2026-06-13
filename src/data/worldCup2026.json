@@ -2487,7 +2487,11 @@
         "stadiumName": "SoFi Stadium",
         "city": "Inglewood",
         "country": "Estados Unidos",
-        "status": "scheduled"
+        "status": "finished",
+        "homeScore": 1,
+        "awayScore": 1,
+        "minute": null,
+        "penalties": null
       },
       {
         "id": "match-020",
