@@ -80,7 +80,10 @@ export const hasPersistedScore = (match: {
 
 export const hasPersistableMatchUpdate = (match: MatchWithLiveScore) => {
   const status = String(match.status || "").toLowerCase();
-  return hasPersistedScore(match) || status === "live" || status === "finished";
+
+  // Resultado finalizado só é persistível se vier com placar numérico.
+  // Isso evita gravar "finished" com score null e travar o card como finalizado sem resultado.
+  return hasPersistedScore(match) || status === "live";
 };
 
 const sameMatch = (target: MatchWithLiveScore, liveMatch: MatchWithLiveScore) => {
@@ -115,14 +118,14 @@ const applyLiveScoreToMatch = (target: MatchWithLiveScore, liveMatch: MatchWithL
 
   const liveStatus = String(liveMatch.status || "").toLowerCase();
 
-  if (liveStatus && liveStatus !== "scheduled") {
-    target.status = liveMatch.status || target.status;
-  }
-
-  // Nunca apaga um placar bom com null. Se a IA não trouxe placar, só atualiza status/minuto.
+  // Nunca marca um jogo como finished sem placar.
+  // Se a IA retornar status finished mas score null, esse retorno é considerado incompleto.
   if (hasPersistedScore(liveMatch)) {
+    target.status = liveMatch.status || target.status;
     target.homeScore = Number(liveMatch.homeScore);
     target.awayScore = Number(liveMatch.awayScore);
+  } else if (liveStatus === "live") {
+    target.status = liveMatch.status || target.status;
   }
 
   if (liveMatch.minute !== undefined) {

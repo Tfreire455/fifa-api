@@ -161,4 +161,3 @@ SCORERS_CACHE_TTL_MS=600000
 ```
 
 As respostas da IA são cacheadas em memória conforme os TTLs acima. Em caso de falha ou timeout da OpenAI, a API retorna automaticamente os dados locais.
-# fifa-api

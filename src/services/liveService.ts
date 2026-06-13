@@ -82,20 +82,46 @@ type AiLiveScoresPayload = {
 	matches?: LiveScore[];
 };
 
+const getMatchSearchDescription = (match: LiveMatch) => {
+	return [
+		`matchNumber=${match.matchNumber}`,
+		`id=${match.id}`,
+		`date=${match.date}`,
+		`kickoffLocal=${match.kickoffLocal || "TBD"}`,
+		`timezone=${match.timezone || "TBD"}`,
+		`${match.homeTeamName} (${match.homeTeamCode}) vs ${match.awayTeamName} (${match.awayTeamCode})`,
+		`stadium=${match.stadiumName || "TBD"}`,
+		`city=${match.city || "TBD"}`,
+	].join(" | ");
+};
+
 const fetchLiveScoresFromOpenAI = async (
-	dates: string[],
+	matches: LiveMatch[],
 ): Promise<LiveScore[] | null> => {
+	const matchesToCheck = matches
+		.filter((match) => match.date <= todayIso())
+		.sort((a, b) => Number(a.matchNumber) - Number(b.matchNumber));
+
+	if (!matchesToCheck.length) return null;
+
+	const matchList = matchesToCheck.map(getMatchSearchDescription).join("\n");
+
 	const prompt = [
 		`Hoje é ${todayIso()}.`,
-		`Busque na web os placares em tempo real e resultados dos jogos da Copa do Mundo FIFA 2026 nas datas: ${dates.join(", ")}.`,
-		"Cada jogo tem um número oficial (matchNumber) de 1 a 104.",
-		"Responda SOMENTE com JSON no formato:",
-		`{"matches":[{"matchNumber":1,"homeTeamCode":"MEX","awayTeamCode":"RSA","homeScore":1,"awayScore":0,"status":"live","minute":"63'"}]}`,
-		"Regras: status deve ser scheduled, live ou finished.",
-		"homeScore/awayScore devem ser null para jogos ainda não iniciados.",
-		'minute é a string do minuto atual apenas para jogos ao vivo (ex: "63\'", "45\'+2", "HT"), caso contrário null.',
-		"Inclua todos os jogos dessas datas que encontrar. Não invente placares.",
-	].join(" ");
+		"Busque na web os placares/resultados atuais SOMENTE dos jogos da Copa do Mundo FIFA 2026 listados abaixo.",
+		"Não ignore nenhum jogo listado. Retorne uma entrada para cada matchNumber.",
+		"JOGOS PARA VERIFICAR:",
+		matchList,
+		"Responda SOMENTE com JSON válido no formato:",
+		`{"matches":[{"matchNumber":19,"homeTeamCode":"USA","awayTeamCode":"PAR","homeScore":4,"awayScore":1,"status":"finished","minute":null}]}`,
+		"Regras obrigatórias:",
+		"1. status deve ser scheduled, live ou finished.",
+		"2. Se o jogo terminou, homeScore e awayScore devem ser números. Não retorne finished com placar null.",
+		"3. Se o jogo está ao vivo, retorne o placar atual e minute.",
+		"4. Se o jogo ainda não começou, use status scheduled e placares null.",
+		"5. Preserve exatamente o matchNumber da lista.",
+		"6. Não invente placares. Se não encontrar o resultado, retorne scheduled com null.",
+	].join("\n");
 
 	const payload = await askOpenAIForJson<AiLiveScoresPayload>(prompt);
 	return payload?.matches || null;
@@ -125,18 +151,17 @@ const mergeScores = (matches: LiveMatch[], scores: LiveScore[]): boolean => {
 
 		const scoreHasNumbers = hasScore(score);
 		const scoreStatus = String(score.status || "").toLowerCase();
-		const scoreIsUseful = scoreHasNumbers || scoreStatus === "live" || scoreStatus === "finished";
+		const scoreIsUseful = scoreHasNumbers || scoreStatus === "live";
 
 		if (!scoreIsUseful) continue;
 
-		if (scoreStatus && scoreStatus !== "scheduled") {
-			target.status = score.status || target.status;
-		}
-
-		// Não apaga placar salvo com null vindo da IA.
+		// Não aceita "finished" sem placar. Isso era a causa de jogo ficar preso sem resultado.
 		if (scoreHasNumbers) {
+			target.status = score.status || target.status;
 			target.homeScore = Number(score.homeScore);
 			target.awayScore = Number(score.awayScore);
+		} else if (scoreStatus === "live") {
+			target.status = score.status || target.status;
 		}
 
 		target.minute = score.minute ?? target.minute ?? null;
@@ -220,7 +245,7 @@ export const getLiveMatches = async (
 	let result = localResult;
 
 	if (isOpenAIConfigured() && localMatches.length > 0) {
-		const scores = await fetchLiveScoresFromOpenAI(dates);
+		const scores = await fetchLiveScoresFromOpenAI(localMatches);
 
 		if (scores?.length) {
 			const changed = mergeScores(localMatches, scores);
