@@ -1,0 +1,63 @@
+{
+  "key": "live:matches:2026-06-11",
+  "value": {
+    "source": "database-saved",
+    "updatedAt": "2026-06-13T17:58:58.294Z",
+    "date": "2026-06-11",
+    "total": 2,
+    "data": [
+      {
+        "id": "match-001",
+        "matchNumber": 1,
+        "stage": "group_stage",
+        "group": "A",
+        "round": "R1",
+        "date": "2026-06-11",
+        "kickoffLocal": "13:00",
+        "timezone": "America/Mexico_City",
+        "homeTeamId": "mexico",
+        "awayTeamId": "south-africa",
+        "homeTeamName": "Mexico",
+        "awayTeamName": "South Africa",
+        "homeTeamCode": "MEX",
+        "awayTeamCode": "RSA",
+        "stadiumId": "azteca",
+        "stadiumName": "Estadio Azteca",
+        "city": "Mexico City",
+        "country": "México",
+        "status": "finished",
+        "homeScore": 2,
+        "awayScore": 0,
+        "minute": null,
+        "penalties": null
+      },
+      {
+        "id": "match-002",
+        "matchNumber": 2,
+        "stage": "group_stage",
+        "group": "A",
+        "round": "R1",
+        "date": "2026-06-11",
+        "kickoffLocal": "20:00",
+        "timezone": "America/Mexico_City",
+        "homeTeamId": "south-korea",
+        "awayTeamId": "czech-republic",
+        "homeTeamName": "Korea Republic",
+        "awayTeamName": "Czech Republic",
+        "homeTeamCode": "KOR",
+        "awayTeamCode": "CZE",
+        "stadiumId": "akron",
+        "stadiumName": "Estadio Akron",
+        "city": "Guadalajara",
+        "country": "México",
+        "status": "finished",
+        "homeScore": 2,
+        "awayScore": 1,
+        "minute": null,
+        "penalties": null
+      }
+    ]
+  },
+  "createdAt": "2026-06-13T17:58:58.294Z",
+  "expiresAt": 9007199254740991
+}

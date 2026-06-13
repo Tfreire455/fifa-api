@@ -1,0 +1,116 @@
+### Home
+GET http://localhost:3333
+
+### Health
+GET http://localhost:3333/api/health
+
+### Metadata
+GET http://localhost:3333/api/metadata
+
+### Full database
+GET http://localhost:3333/api/database
+
+### Reload JSON without restarting server
+POST http://localhost:3333/api/database/reload
+
+### Teams
+GET http://localhost:3333/api/teams
+
+### Teams with local image URLs
+GET http://localhost:3333/api/teams?assets=true
+
+### Teams by group
+GET http://localhost:3333/api/teams?group=A&assets=true
+
+### Team by id
+GET http://localhost:3333/api/teams/brazil?assets=true
+
+### Team by slug
+GET http://localhost:3333/api/teams/slug/brazil?assets=true
+
+### Team by code
+GET http://localhost:3333/api/teams/code/BRA?assets=true
+
+### Team players
+GET http://localhost:3333/api/teams/brazil/players
+
+### Team matches
+GET http://localhost:3333/api/teams/brazil/matches
+
+### Groups
+GET http://localhost:3333/api/groups
+
+### Group with teams and matches
+GET http://localhost:3333/api/groups/A
+
+### Group teams
+GET http://localhost:3333/api/groups/A/teams
+
+### Group matches
+GET http://localhost:3333/api/groups/A/matches
+
+### Stadiums
+GET http://localhost:3333/api/stadiums
+
+### Stadium by id
+GET http://localhost:3333/api/stadiums/azteca
+
+### Matches
+GET http://localhost:3333/api/matches
+
+### Matches hydrated
+GET http://localhost:3333/api/matches?hydrate=true
+
+### Matches by group
+GET http://localhost:3333/api/matches?group=A
+
+### Matches by date
+GET http://localhost:3333/api/matches?date=2026-06-13
+
+### Matches by team
+GET http://localhost:3333/api/matches/team/brazil
+
+### Matches by code
+GET http://localhost:3333/api/matches/code/BRA
+
+### Assets
+GET http://localhost:3333/api/assets
+
+### Assets by team
+GET http://localhost:3333/api/assets/team/brazil
+
+### Assets by code
+GET http://localhost:3333/api/assets/code/BRA
+
+### Search
+GET http://localhost:3333/api/search?q=brazil
+
+### Live - jogos de hoje com placares em tempo real (OpenAI)
+GET http://localhost:3333/api/live/matches
+
+### Live - jogos de uma data especifica
+GET http://localhost:3333/api/live/matches?date=2026-06-11
+
+### Live - classificacao de todos os grupos
+GET http://localhost:3333/api/live/standings
+
+### Live - classificacao do Grupo C
+GET http://localhost:3333/api/live/standings/C
+
+### Live - estatisticas detalhadas de uma partida
+GET http://localhost:3333/api/live/match/match-001/stats
+
+### Mata-mata - chaveamento completo (atualizado por IA quando a fase comecar)
+GET http://localhost:3333/api/knockout
+
+### Mata-mata - fase atual do torneio
+GET http://localhost:3333/api/knockout/phase
+
+### Elenco oficial atualizado de uma seleção (id, slug ou código FIFA)
+GET {{baseUrl}}/api/live/team/brazil/squad
+
+### Escalações oficiais de um jogo (id ou matchNumber)
+GET {{baseUrl}}/api/live/match/1/lineups
+
+### Artilharia do torneio em tempo real
+GET {{baseUrl}}/api/live/scorers?limit=10

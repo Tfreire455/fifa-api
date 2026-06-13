@@ -1,0 +1,69 @@
+{
+  "key": "live:standings:D",
+  "value": {
+    "group": "D",
+    "source": "database-saved",
+    "updatedAt": "2026-06-13T17:58:40.297Z",
+    "standings": [
+      {
+        "position": 1,
+        "teamId": "australia",
+        "teamCode": "AUS",
+        "teamName": "Austrália",
+        "played": 0,
+        "won": 0,
+        "drawn": 0,
+        "lost": 0,
+        "goalsFor": 0,
+        "goalsAgainst": 0,
+        "goalDifference": 0,
+        "points": 0
+      },
+      {
+        "position": 2,
+        "teamId": "united-states",
+        "teamCode": "USA",
+        "teamName": "Estados Unidos",
+        "played": 0,
+        "won": 0,
+        "drawn": 0,
+        "lost": 0,
+        "goalsFor": 0,
+        "goalsAgainst": 0,
+        "goalDifference": 0,
+        "points": 0
+      },
+      {
+        "position": 3,
+        "teamId": "paraguay",
+        "teamCode": "PAR",
+        "teamName": "Paraguai",
+        "played": 0,
+        "won": 0,
+        "drawn": 0,
+        "lost": 0,
+        "goalsFor": 0,
+        "goalsAgainst": 0,
+        "goalDifference": 0,
+        "points": 0
+      },
+      {
+        "position": 4,
+        "teamId": "turkiye",
+        "teamCode": "TUR",
+        "teamName": "Turquia",
+        "played": 0,
+        "won": 0,
+        "drawn": 0,
+        "lost": 0,
+        "goalsFor": 0,
+        "goalsAgainst": 0,
+        "goalDifference": 0,
+        "points": 0
+      }
+    ],
+    "persistedAt": "2026-06-13T17:58:40.319Z"
+  },
+  "createdAt": "2026-06-13T18:01:16.558Z",
+  "expiresAt": 9007199254740991
+}
